@@ -105,10 +105,13 @@ class SystemCrossprepareTask(CliTask):
         target_image_dir = os.sep.join(
             [target_dir, 'build', 'image-root', 'image']
         )
+        qemu_arch = target_arch
+        if qemu_arch in [ 'armv6l', 'armv6hl', 'armv7l', 'armv7hl' ]:
+            qemu_arch = 'arm'
         qemu_binaries = [
             '/usr/bin/qemu-binfmt',
-            f'/usr/bin/qemu-{target_arch}-binfmt',
-            f'/usr/bin/qemu-{target_arch}'
+            f'/usr/bin/qemu-{qemu_arch}-binfmt',
+            f'/usr/bin/qemu-{qemu_arch}'
         ]
         if not os.path.isdir(target_dir):
             Path.create(target_bin_dir)
