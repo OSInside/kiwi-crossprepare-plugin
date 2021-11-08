@@ -127,5 +127,9 @@ class SystemCrossprepareTask(CliTask):
             shutil.copy(qemu_binary, target_bin_dir)
 
         # Call init binary
+        if os.path.isfile('/.dockerenv.privileged'):
+            log.warning('kiwi cross architecture setup is disabled in privileged docker. Ensure binfmtmisc handler got enabled external before')
+            return
+
         log.info(f'Calling init binary {init_binary!r}')
         Command.run([init_binary])
